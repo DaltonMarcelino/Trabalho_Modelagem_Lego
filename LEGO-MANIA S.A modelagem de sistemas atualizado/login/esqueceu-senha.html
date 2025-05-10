@@ -24,31 +24,31 @@
   </div>
 
   <!-- Novo SDK do EmailJS -->
-  <script type="module">
-    import emailjs from 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+  emailjs.init('dfH4HrdmmbleK_C3W');
 
-    emailjs.init('dfH4HrdmmbleK_C3W'); // ⚠️ Substitua com seu Public Key
+  document.getElementById("form-codigo").addEventListener("submit", function(e) {
+    e.preventDefault();
 
-    document.getElementById("form-codigo").addEventListener("submit", function(e) {
-      e.preventDefault();
+    const email = document.getElementById("email").value;
+    const codigo = Math.floor(100000 + Math.random() * 900000);
 
-      const email = document.getElementById("email").value;
-      const codigo = Math.floor(100000 + Math.random() * 900000);
+    const templateParams = {
+      to_email: email,
+      codigo: codigo
+    };
 
-      const templateParams = {
-        to_email: email,
-        codigo: codigo
-      };
+    emailjs.send("service_blfqbtu", "template_298aq2s", templateParams)
+      .then(() => {
+        alert("Código enviado para " + email);
+        console.log("Código:", codigo);
+      }, (error) => {
+        alert("Erro ao enviar e-mail: " + JSON.stringify(error));
+      });
+  });
+</script>
 
-      emailjs.send("service_blfqbtu", "template_298aq2s", templateParams)
-        .then(() => {
-          alert("Código enviado para " + email);
-          console.log("Código:", codigo); // Opcional: para testes
-        }, (error) => {
-          alert("Erro ao enviar e-mail: " + JSON.stringify(error));
-        });
-    });
-  </script>
 
 </body>
 </html>
